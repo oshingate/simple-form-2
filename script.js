@@ -1,6 +1,26 @@
 {
-  let persons = [];
+  let persons = [
+    {
+      name: "admin",
+      email: "admin@gmail.com",
+      type: "front end",
+      password: "admin1234",
+    },
+    {
+      name: "password",
+      email: "password@gmail.com",
+      type: "back end",
+      password: "password1234",
+    },
+    {
+      name: "sudarshan",
+      email: "sudarshan@gmail.com",
+      type: "designer",
+      password: "sudarshan1234",
+    },
+  ];
   let form = document.querySelector(".signup");
+  let form2 = document.querySelector(".login");
 
   // handle submit func
   let handleSubmit = (event) => {
@@ -73,6 +93,7 @@
       formval.password.classList.contains("valid")
     ) {
       persons.push(person);
+      console.log(person);
       alert("Your form is submitted");
       formval.name.value = "";
       formval.email.value = "";
@@ -81,7 +102,7 @@
     }
   };
 
-  let defaultUI = () => {
+  let signupUI = () => {
     form.innerHTML = "";
 
     let namefieldset = document.createElement("fieldset");
@@ -174,8 +195,99 @@
       passwordfieldset,
       signupbutton
     );
+    form.addEventListener("submit", handleSubmit);
   };
-  form.addEventListener("submit", handleSubmit);
 
-  defaultUI();
+  let handleLogIn = (event) => {
+    event.preventDefault();
+
+    let inputperson = {};
+    inputperson.email = event.target.loginemail.value;
+    inputperson.password = event.target.loginpassword.value;
+    console.log(inputperson);
+
+    let matchedPerson = persons.filter((e) => {
+      if (e.email == inputperson.email && e.password == inputperson.password) {
+        return "true";
+      }
+    });
+    console.log(matchedPerson);
+    if (matchedPerson.length != 0) {
+      alert("login sucessfull");
+    } else {
+      alert("invalid credentials");
+    }
+  };
+  let loginUI = () => {
+    form2.innerHTML = "";
+    let loginemailfieldset = document.createElement("fieldset");
+    let loginemaillabel = document.createElement("label");
+    loginemaillabel.innerText = "Enter your Email:";
+    loginemaillabel.for = "loginemail";
+    let loginemailinput = document.createElement("input");
+    loginemailinput.type = "email";
+    loginemailinput.name = "loginemail";
+    loginemailinput.id = "loginemail";
+    loginemailinput.placeholder = "Enter email";
+    let loginemailspan = document.createElement("span");
+    loginemailspan.setAttribute("data-name", "email");
+    loginemailfieldset.append(loginemaillabel, loginemailinput, loginemailspan);
+
+    let loginpasswordfieldset = document.createElement("fieldset");
+    let loginpasswordlabel = document.createElement("label");
+    loginpasswordlabel.for = "loginpassword";
+    loginpasswordlabel.innerText = "Enter your Password:";
+
+    let loginpassworddiv = document.createElement("div");
+    loginpassworddiv.classList.add("flex");
+    let loginpasswordinput = document.createElement("input");
+    loginpasswordinput.type = "password";
+    loginpasswordinput.name = "loginpassword";
+    loginpasswordinput.id = "loginpassword";
+    loginpasswordinput.placeholder = "Enter password";
+    loginpasswordinput.classList.add("flex-90", "pass-input");
+    let loginpassworda = document.createElement("a");
+    loginpassworda.href = "#";
+    loginpassworda.classList.add("flex-10", "pass-eye");
+    let loginpasswordi = document.createElement("i");
+    loginpasswordi.classList.add("fas", "fa-eye");
+    loginpassworda.append(loginpasswordi);
+    loginpassworda.addEventListener("click", () => {
+      if (loginpasswordinput.type === "password") {
+        loginpasswordinput.type = "text";
+      } else if (loginpasswordinput.type === "text") {
+        loginpasswordinput.type = "password";
+      }
+    });
+    loginpassworddiv.append(loginpasswordinput, loginpassworda);
+    let loginpasswordspan = document.createElement("span");
+    loginpasswordspan.setAttribute("data-name", "password");
+    loginpasswordspan.innerText = "Minimum 8 characters";
+    loginpasswordspan.classList.add("password-span");
+    loginpasswordfieldset.append(
+      loginpasswordlabel,
+      loginpassworddiv,
+      loginpasswordspan
+    );
+    let loginsignupbutton = document.createElement("button");
+    loginsignupbutton.type = "submit";
+    loginsignupbutton.id = "form-btn";
+    loginsignupbutton.innerText = "SignIn";
+    form2.append(loginemailfieldset, loginpasswordfieldset, loginsignupbutton);
+    form2.addEventListener("submit", handleLogIn);
+  };
+
+  loginUI();
+  signupUI();
+
+  let switchForm = document.querySelectorAll(".color-pri");
+  let signindiv = document.querySelector(".sign-in-div");
+  let signupdiv = document.querySelector(".sign-up-div");
+
+  switchForm.forEach((e) => {
+    e.addEventListener("click", () => {
+      signindiv.classList.toggle("disable");
+      signupdiv.classList.toggle("disable");
+    });
+  });
 }

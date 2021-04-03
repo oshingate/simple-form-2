@@ -165,6 +165,9 @@ a {
 .invalid {
   border: 1px solid red;
 }
+.disable {
+  display: none;
+}
 /* custome */
 
 .main-div {
@@ -251,4 +254,11 @@ fieldset > span {
   padding: 0.5rem;
   border: none;
   outline: none;
+}
+
+/* form 2 */
+
+#loginname,
+#loginpassword {
+  margin-top: 0.5rem;
 }
