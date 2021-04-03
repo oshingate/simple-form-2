@@ -1,6 +1,6 @@
 {
   let persons = [];
-  let form = document.querySelector("form");
+  let form = document.querySelector(".signup");
 
   // handle submit func
   let handleSubmit = (event) => {
@@ -148,6 +148,13 @@
     let passwordi = document.createElement("i");
     passwordi.classList.add("fas", "fa-eye");
     passworda.append(passwordi);
+    passworda.addEventListener("click", () => {
+      if (passwordinput.type === "password") {
+        passwordinput.type = "text";
+      } else if (passwordinput.type === "text") {
+        passwordinput.type = "password";
+      }
+    });
     passworddiv.append(passwordinput, passworda);
     let passwordspan = document.createElement("span");
     passwordspan.setAttribute("data-name", "password");
